@@ -1,0 +1,62 @@
+@import "tailwindcss";
+
+@theme {
+  --color-background: #0D0D0D;
+  --color-foreground: #FFFFFF;
+  --color-surface: #1A1A1A;
+  
+  --color-primary: #7B2CBF;
+  --color-primary-light: #9D4EDD;
+  --color-primary-dark: #5A189A;
+  
+  --color-accent: #BB86FC;
+  --color-neon-purple: #BB86FC;
+  
+  --font-heading: var(--font-orbitron);
+  --font-body: var(--font-inter);
+  
+  --shadow-neon: 0 0 10px rgba(187, 134, 252, 0.5), 0 0 20px rgba(187, 134, 252, 0.2);
+  --shadow-neon-strong: 0 0 15px rgba(187, 134, 252, 0.8), 0 0 30px rgba(187, 134, 252, 0.4);
+  
+  --background-image-purple-glow: radial-gradient(circle, rgba(123, 44, 191, 0.15) 0%, rgba(13, 13, 13, 0) 70%);
+}
+
+@layer base {
+  * {
+    @apply border-white/10;
+  }
+  body {
+    @apply bg-background text-foreground font-body;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-heading uppercase tracking-wider;
+  }
+}
+
+@layer components {
+  .glass {
+    @apply bg-surface/80 backdrop-blur-md border border-primary/20;
+  }
+  
+  .btn-glow {
+    @apply relative overflow-hidden transition-all duration-300;
+  }
+  
+  .btn-glow:hover {
+    @apply shadow-neon-strong scale-105;
+  }
+  
+  .btn-glow::after {
+    content: '';
+    @apply absolute inset-0 opacity-0 transition-opacity duration-300 bg-primary/20 blur-xl;
+  }
+  
+  .btn-glow:hover::after {
+    @apply opacity-100;
+  }
+}
+
+:root {
+  --background: #0D0D0D;
+  --foreground: #FFFFFF;
+}
