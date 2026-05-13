@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion"
 import Image from "next/image"
+import Link from "next/link"
 import { Button } from "@/components/ui/Button"
 import { ChevronRight, ShieldCheck, Zap, Sparkles } from "lucide-react"
 
@@ -62,12 +63,16 @@ export function Hero() {
             transition={{ delay: 0.8, duration: 0.5 }}
             className="flex flex-col sm:flex-row gap-4"
           >
-            <Button size="lg" variant="glow" className="group">
-              Book Your Detail
-              <ChevronRight className="ml-2 group-hover:translate-x-1 transition-transform" size={18} />
+            <Button size="lg" variant="glow" className="group" asChild>
+              <Link href="#booking">
+                Book Your Detail
+                <ChevronRight className="ml-2 group-hover:translate-x-1 transition-transform" size={18} />
+              </Link>
             </Button>
-            <Button size="lg" variant="outline">
-              Our Services
+            <Button size="lg" variant="outline" asChild>
+              <Link href="#services">
+                Our Services
+              </Link>
             </Button>
           </motion.div>
 

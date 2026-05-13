@@ -4,6 +4,7 @@ import { motion } from "framer-motion"
 import { Droplet, Wind, Shield, Star } from "lucide-react"
 import { Button } from "@/components/ui/Button"
 import Image from "next/image"
+import Link from "next/link"
 
 const services = [
   {
@@ -108,8 +109,10 @@ export function Services() {
                   ))}
                 </ul>
 
-                <Button variant={service.highlight ? "glow" : "outline"} className="w-full">
-                  Book Service
+                <Button variant={service.highlight ? "glow" : "outline"} className="w-full" asChild>
+                  <Link href="#booking">
+                    Book Service
+                  </Link>
                 </Button>
               </div>
             </motion.div>
