@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import { motion } from "framer-motion"
-import { Calendar as CalendarIcon, Clock, User, Phone, Mail, Car } from "lucide-react"
+import { Calendar as CalendarIcon, Clock, User, Phone, Mail, Car, Sparkles } from "lucide-react"
 import { DayPicker } from "react-day-picker"
 import { format } from "date-fns"
 import { Button } from "@/components/ui/Button"
@@ -28,12 +28,13 @@ export function Booking() {
     const encodedMessage = encodeURIComponent(message)
     const whatsappUrl = `https://wa.me/27671472681?text=${encodedMessage}`
     
+    // Set submitted state first
     setIsSubmitted(true)
     
-    // Small delay to allow user to see the success state before redirecting
-    setTimeout(() => {
-      window.open(whatsappUrl, "_blank")
-    }, 1500)
+    // Open WhatsApp in a new tab immediately
+    // Note: Some browsers might block this if it's not the primary action, 
+    // but usually user-initiated form submits are fine.
+    window.open(whatsappUrl, "_blank")
   }
 
   if (isSubmitted) {
