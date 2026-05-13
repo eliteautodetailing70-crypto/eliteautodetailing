@@ -15,6 +15,51 @@ export function Booking() {
   const [date, setDate] = useState<Date | undefined>(new Date())
   const [selectedService, setSelectedService] = useState(services[0])
   const [selectedTime, setSelectedTime] = useState(timeSlots[0])
+  const [name, setName] = useState("")
+  const [phone, setPhone] = useState("")
+  const [vehicle, setVehicle] = useState("")
+  const [isSubmitted, setIsSubmitted] = useState(false)
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault()
+    
+    const formattedDate = date ? format(date, "PPP") : "N/A"
+    const message = `Hi Elite Auto Detailing, I'd like to book a ${selectedService} for ${name} on ${formattedDate} at ${selectedTime} for my ${vehicle}.`
+    const encodedMessage = encodeURIComponent(message)
+    const whatsappUrl = `https://wa.me/27671472681?text=${encodedMessage}`
+    
+    setIsSubmitted(true)
+    
+    // Small delay to allow user to see the success state before redirecting
+    setTimeout(() => {
+      window.open(whatsappUrl, "_blank")
+    }, 1500)
+  }
+
+  if (isSubmitted) {
+    return (
+      <section id="booking" className="py-24 bg-background">
+        <div className="container mx-auto px-6">
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            className="max-w-2xl mx-auto glass p-12 rounded-3xl text-center"
+          >
+            <div className="w-20 h-20 bg-primary/20 rounded-full flex items-center justify-center text-primary mx-auto mb-8">
+              <Sparkles size={40} />
+            </div>
+            <h2 className="text-4xl font-bold mb-4">THANK YOU, {name.split(' ')[0]}!</h2>
+            <p className="text-white/70 mb-8 text-lg">
+              Your booking details have been captured. We are redirecting you to WhatsApp to finalize your appointment.
+            </p>
+            <Button variant="glow" onClick={() => setIsSubmitted(false)}>
+              Make Another Booking
+            </Button>
+          </motion.div>
+        </div>
+      </section>
+    )
+  }
 
   return (
     <section id="booking" className="py-24 bg-background">
@@ -37,7 +82,7 @@ export function Booking() {
             <div className="space-y-6">
                 <div className="flex items-center gap-4">
                     <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center text-primary border border-primary/20">
-                        <Smartphone className="w-6 h-6" />
+                        <Smartphone size={24} />
                     </div>
                     <div>
                         <div className="text-xs text-white/50 uppercase tracking-widest font-bold">Call Us</div>
@@ -63,7 +108,7 @@ export function Booking() {
             viewport={{ once: true }}
             className="lg:w-2/3 glass p-8 md:p-12 rounded-3xl"
           >
-            <form className="space-y-8" onSubmit={(e) => e.preventDefault()}>
+            <form className="space-y-8" onSubmit={handleSubmit}>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 {/* Service Selection */}
                 <div className="space-y-4">
@@ -141,6 +186,9 @@ export function Booking() {
                         </label>
                         <input 
                             type="text" 
+                            required
+                            value={name}
+                            onChange={(e) => setName(e.target.value)}
                             placeholder="Your Name" 
                             className="w-full bg-surface/50 border border-white/5 rounded-xl px-6 py-4 text-white focus:outline-none focus:border-primary transition-colors"
                         />
@@ -155,6 +203,9 @@ export function Booking() {
                         </label>
                         <input 
                             type="tel" 
+                            required
+                            value={phone}
+                            onChange={(e) => setPhone(e.target.value)}
                             placeholder="012 345 6789" 
                             className="w-full bg-surface/50 border border-white/5 rounded-xl px-6 py-4 text-white focus:outline-none focus:border-primary transition-colors"
                         />
@@ -166,6 +217,9 @@ export function Booking() {
                         </label>
                         <input 
                             type="text" 
+                            required
+                            value={vehicle}
+                            onChange={(e) => setVehicle(e.target.value)}
                             placeholder="e.g. BMW M4" 
                             className="w-full bg-surface/50 border border-white/5 rounded-xl px-6 py-4 text-white focus:outline-none focus:border-primary transition-colors"
                         />
@@ -174,7 +228,7 @@ export function Booking() {
               </div>
 
               <div className="pt-4">
-                <Button variant="glow" className="w-full h-16 text-lg">
+                <Button type="submit" variant="glow" className="w-full h-16 text-lg">
                   Confirm Booking
                 </Button>
                 <p className="text-center text-[10px] text-white/40 mt-4 uppercase tracking-[0.2em]">
